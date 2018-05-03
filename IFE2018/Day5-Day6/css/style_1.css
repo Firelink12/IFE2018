@@ -1,0 +1,16 @@
+p {
+    line-height: 25px;
+    font-family: "黑体";
+}
+
+span {
+    font-family: "宋体";
+}
+
+ul {
+    list-style-type: none;
+}
+
+li {
+    display: inline;
+}
