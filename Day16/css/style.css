@@ -1,0 +1,45 @@
+body {
+    text-align: center;
+}
+
+h1 {
+    color: red;
+    font-size: 40px;
+    text-shadow: 5px 5px 5px #D2691E;
+}
+
+h2 {
+    color: pink;
+}
+
+p {
+    font-size: 18px;
+    line-height: 25px;
+}
+
+span {
+    font-family: Serif;
+    text-decoration: underline;
+}
+
+ol,
+ul {
+    padding: 0;
+    color: purple;
+    list-style: none;
+}
+
+#more1 {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+#more2 {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+#more3 {
+    cursor: pointer;
+    text-decoration: underline;
+}
