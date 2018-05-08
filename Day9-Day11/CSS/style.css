@@ -168,7 +168,7 @@
 }
 
 .li23::before {
-    content: url(..images/image/1_15.png);
+    content: url(../images/image/1_15.png);
     vertical-align: middle;
     display: inline-block;
     /* padding-right: 30px; */
