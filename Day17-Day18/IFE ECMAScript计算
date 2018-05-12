@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>IFE ECMAScript</title>
+</head>
+
+<body>
+    <input id="first-number" type="number" value="0" placeholder="第一个数字">
+    <input id="second-number" type="number" value="0" placeholder="第二个数字">
+    <button id="add-btn">加</button>
+    <button id="minus-btn">减</button>
+    <button id="times-btn">乘</button>
+    <button id="divide-btn">除</button>
+    <p id="result">运算结果</p>
+    <script>
+        var FNum = document.getElementById("first-number");
+        var SNum = document.getElementById("second-number");
+        var ADD = document.getElementById("add-btn");
+        var MINUS = document.getElementById("minus-btn");
+        var TIMES = document.getElementById("times-btn");
+        var DIVIDE = document.getElementById("divide-btn");
+        var RE = document.getElementById("result");
+
+        function doADD() {
+            if (FNum.value != number || SNum.value != number) {
+                console.log("请输入正确的数值")
+            } else {
+                RE.innerHTML = Number(FNum.value) + Number(SNum.value);
+            }
+        }
+
+        function doMINUS() {
+            if (FNum.value != number || SNum.value != number) {
+                console.log("请输入正确的数值")
+            } else {
+                RE.innerHTML = Number(FNum.value) - Number(SNum.value);
+            }
+        }
+
+        function doTIMES() {
+            if (FNum.value != number || SNum.value != number) {
+                console.log("请输入正确的数值")
+            } else {
+                RE.innerHTML = Number(FNum.value) * Number(SNum.value);
+            }
+        }
+
+        function doDIVIDE() {
+            if (SNum.value == 0) {
+                console.log("除数不能为零！")
+            } else {
+                RE.innerHTML = Number(FNum.value) / Number(SNum.value);
+            }
+        }
+        ADD.onclick = function() {
+            doADD();
+        }
+        MINUS.onclick = function() {
+            doMINUS();
+        }
+        TIMES.onclick = function() {
+            doTIMES();
+        }
+        DIVIDE.onclick = function() {
+            doDIVIDE();
+        }
+    </script>
+</body>
+
+</html>
