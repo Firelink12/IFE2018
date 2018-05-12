@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>IFE ECMAScript</title>
+</head>
+
+<body>
+    <input id="dec-number" type="number" placeholder="输入一个十进制非负整数">
+    <input id="bin-bit" type="number" placeholder="输入转化后二进制数字位数">
+    <button id="trans-btn">转化为二进制</button>
+    <p id="result">运算结果</p>
+    <script>
+        // 实现党点击转化按钮时，将输入的十进制数字转化为二进制，并显示在result的p标签内
+        // Some coding
+        var BTN = document.getElementById("trans-btn");
+        var RES = document.getElementById("result");
+        var DECN = document.getElementById("dec-number");
+        var BINB = document.getElementById("bin-bit");
+
+        function dec2bin(decNumber) {
+            var decNumber = DECN.value;
+            var TXT = parseInt(decNumber, 10).toString(2);
+            if (DECN.value <= 0) {
+                alert("请输入一个非负整数");
+            } else if (TXT.length < BINB.value) {
+                // RES.innerHTML = (Array(BINB.value).join('0') + TXT).slice(-BINB.value);
+
+
+                // var i = (TXT + "").length;
+                // while (i++ < BINB.value) num = "0" + TXT;
+                // RES.innerHTML = TXT;
+
+
+                // RES.innerHTML = Array(BINB.value - TXT.length + 1).join("0") + TXT;
+
+                var buffer = "";
+                for (var i = 0; i < (BINB.value - TXT.length); i++) {
+                    buffer += "0";
+                }
+                RES.innerHTML = buffer + TXT;
+            } else if (TXT.length >= BINB.value) {
+                RES.innerHTML = TXT;
+                console.log("超出长度范围！")
+            }
+        };
+
+        BTN.onclick = function() {
+            dec2bin();
+        }
+    </script>
+</body>
+
+</html>
