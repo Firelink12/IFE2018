@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>CSS Sprite</title>
+    <style>
+        div {
+            height: 480px;
+            width: 480px;
+            background-image: url(http://ife.baidu.com/2016/static/img/erik_ce204002.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
+</head>
+
+<body>
+    <div></div>
+    <script>
+        var div = document.getElementsByTagName("div")[0];
+        var i = 0;
+        var flag = 1;
+        var id = setInterval(pic, 90);
+
+        function pic() {
+            if (flag) {
+                div.style.backgroundPositionY = -i + "px";
+                i = i + 480;
+                if (i === 7680) {
+                    flag = 0;
+                }
+            } else {
+                div.style.backgroundPositionY = -i + "px";
+                i = i - 480;
+                if (i === 0) {
+                    flag = 1;
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
