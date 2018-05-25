@@ -1,0 +1,59 @@
+<script>
+    var arr = [43, 54, 4, -4, 84, 100, 58, 27, 140];
+    //从下到大排列
+    arr.sort(function(a, b) {
+        return a - b;
+    });
+    console.log(arr);
+
+    //从大到小排列
+    arr.sort(function(a, b) {
+        return b - a;
+    });
+    console.log(arr);
+
+    var arr = ['apple', 'dog', 'cat', 'car', 'zoo', 'orange', 'airplane'];
+    //从A到Z
+    arr.sort();
+    console.log(arr);
+
+    //从Z到A
+    arr.sort();
+    arr.reverse();
+    console.log(arr);
+
+    var arr = [
+        [10, 14],
+        [16, 60],
+        [7, 44],
+        [26, 35],
+        [22, 63]
+    ];
+    arr.sort(function(a, b) {
+        return b[1] - a[1]
+    });
+    console.log(arr);
+
+    var arr = [{
+        id: 1,
+        name: 'candy',
+        value: 40
+    }, {
+        id: 2,
+        name: 'Simon',
+        value: 50
+    }, {
+        id: 3,
+        name: 'Tony',
+        value: 45
+    }, {
+        id: 4,
+        name: 'Annie',
+        value: 60
+    }];
+
+    arr.sort(function(a, b) {
+        return a.value - b.value;
+    })
+    console.log(arr);
+</script>
