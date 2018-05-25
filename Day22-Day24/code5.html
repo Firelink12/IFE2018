@@ -1,0 +1,37 @@
+<input id="queue-input" type="text">
+<p id="queue-cont">队列内容：apple-&gt;pear</p>
+<button id="in-btn">入队</button>
+<button id="out-btn">出队</button>
+<button id="font-btn">打印队头元素内容</button>
+<button id="empty-btn">判断队列是否为空</button>
+
+<script>
+    var queue = ["apple", "pear"];
+    var Text = document.querySelector("#queue-input");
+    var Cont = document.querySelector("#queue-cont");
+    var In = document.querySelector("#in-btn");
+    var Out = document.querySelector("#out-btn");
+    var Font = document.querySelector("#font-btn");
+    var Empty = document.querySelector("#empty-btn");
+
+    In.onclick = function() {
+        queue.unshift(Text.value);
+        Cont.innerText = queue.join("->");
+    }
+    Out.onclick = function() {
+        queue.shift();
+        Cont.innerText = queue.join("->");
+    }
+    Font.onclick = function() {
+        var len = queue.length;
+        console.log(queue[len - 1]);
+    }
+    Empty.onclick = function() {
+        var len = queue.length;
+        if (len == 0) {
+            console.log("队列为空");
+        } else {
+            console.log("队列不为空");
+        }
+    }
+</script>
