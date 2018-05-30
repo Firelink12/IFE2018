@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>第二十八天到第三十天 给爱的人发个邮件吧</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        .wrapper ul {
+            list-style: none;
+            padding-left: 0;
+            width: 300px;
+            border: 1px solid #888;
+            display: none;
+            margin: 0;
+            overflow: auto;
+            text-align: center;
+        }
+        
+        .wrapper input {
+            width: 300px;
+        }
+        
+        .wrapper ul>li:hover {
+            background-color: #c1ffc1;
+        }
+        
+        .active {
+            background-color: #FFE1FF;
+        }
+        
+        .wrapper {
+            width: 300px;
+            margin: 0 auto;
+            margin-top: 50px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <input id="email-input" type="text">
+        <ul id="email-sug-wrapper" class="email-sug"></ul>
+    </div>
+    <script>
+        var postfixList = ['163.com', 'gmail.com', '126.com', 'qq.com', '263.net'];
+        var input = document.querySelector("#email-input");
+        var HtmlUtil = {
+            /*1.用浏览器内部转换器实现html转码*/
+            htmlEncode: function(html) {
+                //1.首先动态创建一个容器标签元素，如DIV
+                var temp = document.createElement("div");
+                //2.然后将要转换的字符串设置为这个元素的innerText(ie支持)或者textContent(火狐，google支持)
+                (temp.textContent != undefined) ? (temp.textContent = html) : (temp.innerText = html);
+                //3.最后返回这个元素的innerHTML，即得到经过HTML编码转换的字符串了
+                var output = temp.innerHTML;
+                temp = null;
+                return output;
+            },
+            /*2.用浏览器内部转换器实现html解码*/
+            htmlDecode: function(text) {
+                //1.首先动态创建一个容器标签元素，如DIV
+                var temp = document.createElement("div");
+                //2.然后将要转换的字符串设置为这个元素的innerHTML(ie，火狐，google都支持)
+                temp.innerHTML = text;
+                //3.最后返回这个元素的innerText(ie支持)或者textContent(火狐，google支持)，即得到经过HTML解码的字符串了。
+                var output = temp.innerText || temp.textContent;
+                temp = null;
+                return output;
+            },
+            /*3.用正则表达式实现html转码*/
+            htmlEncodeByRegExp: function(str) {
+                var s = "";
+                if (str.length == 0) return "";
+                s = str.replace(/&/g, "&");
+                s = s.replace(/</g, "<");
+                s = s.replace(/>/g, ">");
+                s = s.replace(/ /g, " ");
+                s = s.replace(/\'/g, "'");
+                s = s.replace(/\"/g, '"');
+                return s;
+            },
+            /*4.用正则表达式实现html解码*/
+            htmlDecodeByRegExp: function(str) {
+                var s = "";
+                if (str.length == 0) return "";
+                s = str.replace(/&/g, "&");
+                s = s.replace(/</g, "<");
+                s = s.replace(/>/g, ">");
+                s = s.replace(/ /g, " ");
+                s = s.replace(/'/g, "\'");
+                s = s.replace(/"/g, "\"");
+                return s;
+            }
+        };
+        input.onkeyup = function() {
+            console.log("onkeyup");
+        }
+        input.onkeypress = function() {
+            console.log("keypress");
+        }
+        input.onkeydown = function() {
+            console.log("keydown");
+        }
+        input.oninput = function() {
+            console.log("oninput");
+        }
+
+        input.oninput = function(e) {
+            addTips(showTips());
+            isShowTips(ulist.innerHTML);
+        }
+
+        function getUserInput() { //获取用户输入
+            input.value = trim(input.value);
+            return input.value;
+        }
+
+        var ulist = document.querySelector("#email-sug-wrapper");
+        ulist.onclick = function(e) {
+            if (e.target && e.target.nodeName.toLowerCase() == 'li') {
+                var text = e.target.innerText;
+                input.value = HtmlUtil.htmlDecodeByRegExp(text);
+                ulist.innerHTML = '';
+                isShowTips(ulist.innerHTML);
+            }
+            input.focus();
+        }
+
+        function trim(str) { //删除前后多余的空格
+            var string = str;
+            var i = 0,
+                j = string.length;
+            while ((string.indexOf(" ", i) == i || string.indexOf("　", i) == i)) {
+                i++;
+            }
+            while ((string.lastIndexOf(" ", j - 1) == j - 1) || (string.lastIndexOf("　", j - 1) == j - 1)) {
+                j--;
+            }
+            string = string.slice(i, j);
+            return string;
+        }
+
+        function showTips() { //生成提示内容
+            var str = getUserInput();
+            if (str == "") {
+                return '';
+            }
+            str = HtmlUtil.htmlEncode(str);
+            var pre = str;
+            var next = '';
+            if (str.indexOf('@') >= 0) {
+                var pre = str.substring(0, str.indexOf('@'));
+                next = str.substring(str.indexOf('@'), str.length);
+            }
+            var arr = postfixList;
+            var list = '';
+            var flag = checkOver(arr, next);
+
+            for (let i = 0; i < arr.length; i++) {
+                if (('@' + arr[i]).indexOf(next) == 0 || next == '' || flag) {
+                    list = list + '<li>' + pre + '@' + arr[i] + '</li>';
+                }
+            }
+            return list;
+        }
+
+        function addTips(str) { //添加提示内容
+            var list = document.querySelector("#email-sug-wrapper");
+            list.innerHTML = str;
+            if (str) {
+                list.childNodes[nowSelectTipIndex].setAttribute('class', 'active');
+            }
+        }
+
+        function isShowTips(str) { //显示或隐藏提示框
+            var list = document.querySelector("#email-sug-wrapper");
+            if (str) {
+                list.style.display = 'block';
+            } else {
+                list.style.display = 'none';
+            }
+        }
+
+        function checkOver(arr, str) {
+            var flag = 0;
+            for (let i = 0; i < arr.length; i++) {
+                if (str.indexOf('@' + arr[i]) == 0 && (str.length - 1) > arr[i].length) {
+                    return true;
+                }
+                if (('@' + arr[i]).indexOf(str) < 0) {
+                    flag++;
+                }
+            }
+            if (flag == arr.length) {
+                return true;
+            }
+            return false;
+        }
+
+
+        //增加一个变量，用于存储当前选中的提示li的序号
+        var nowSelectTipIndex = 0;
+
+        function resetIndex() {
+            nowSelectTipIndex = 0;
+        }
+
+        //监听特殊的3个键盘事件 
+        input.onkeydown = function(e) {
+            var list = document.querySelector('#email-sug-wrapper').childNodes;
+            if (!(e.keyCode == 13 || e.keyCode == 38 || e.keyCode == 40)) {
+                resetIndex();
+            }
+            if (e.keyCode == 38) {
+                if (nowSelectTipIndex > 0) {
+                    nowSelectTipIndex -= 1;
+                } else {
+                    nowSelectTipIndex = list.length - 1;
+                }
+            }
+            if (e.keyCode == 40) {
+                if (nowSelectTipIndex < (list.length - 1)) {
+                    nowSelectTipIndex += 1;
+                } else {
+                    nowSelectTipIndex = 0;
+                }
+
+            }
+            addTips(showTips());
+            if (e.keyCode == 13) {
+                var li = document.querySelector('#email-sug-wrapper > .active');
+                if (li) {
+                    var text = li.innerText;
+                    input.value = HtmlUtil.htmlDecodeByRegExp(text);
+                    ulist.innerHTML = '';
+                    isShowTips(ulist.innerHTML);
+                }
+            }
+            if (e.keyCode == 27) {
+                input.select();
+            }
+        }
+        input.focus();
+    </script>
+</body>
+
+</html>
